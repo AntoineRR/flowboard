@@ -5,7 +5,7 @@
 
 mod api;
 mod board;
-mod project;
+mod node;
 
 use std::sync::RwLock;
 

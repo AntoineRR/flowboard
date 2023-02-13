@@ -15,8 +15,8 @@ const newName = ref("");
 const projectNames = ref("");
 
 async function addProject() {
-  await invoke("add_project", { name: newName.value });
+  await invoke("add_project", { name: newName.value, parentId: 0 });
   newName.value = "";
-  projectNames.value = await invoke("get_project_names");
+  projectNames.value = await invoke("get_project_names", { parentId: 0 });
 }
 </script>
