@@ -3,11 +3,21 @@ use serde::{Deserialize, Serialize};
 
 use super::Node;
 
-#[derive(Default, Serialize, Deserialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Directory {
     id: u64,
     name: String,
     children: Vec<u64>,
+}
+
+impl Default for Directory {
+    fn default() -> Self {
+        Self {
+            id: 0,
+            name: "root".to_string(),
+            children: vec![],
+        }
+    }
 }
 
 #[typetag::serde]
