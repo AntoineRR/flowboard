@@ -19,7 +19,7 @@ impl Board {
     pub fn load_or_create() -> Self {
         Self {
             max_id: 0,
-            nodes: vec![Box::new(Directory::default())], // Root node has id 0
+            nodes: vec![Box::<Directory>::default()], // Root node has id 0
         }
     }
 
@@ -47,9 +47,11 @@ impl Board {
 
     pub fn get_names_for_ids(&self, ids: &[u64]) -> Vec<Option<String>> {
         ids.iter()
-            .map(|id| match self.nodes.iter().find(|n| n.get_id() == *id) {
-                Some(n) => Some(n.get_name()),
-                None => None,
+            .map(|id| {
+                self.nodes
+                    .iter()
+                    .find(|n| n.get_id() == *id)
+                    .map(|n| n.get_name())
             })
             .collect()
     }

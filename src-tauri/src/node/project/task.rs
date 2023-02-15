@@ -2,10 +2,10 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
 enum TaskStatus {
-    TODO,
-    DOING,
-    DONE,
-    ARCHIVED,
+    Todo,
+    Doing,
+    Done,
+    Archived,
 }
 
 #[derive(Serialize, Deserialize)]

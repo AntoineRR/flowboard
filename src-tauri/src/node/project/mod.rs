@@ -9,7 +9,7 @@ use task::Task;
 #[derive(Serialize, Deserialize)]
 pub struct Project {
     id: u64,
-    pub name: String,
+    name: String,
     tasks: Vec<Task>,
 }
 
