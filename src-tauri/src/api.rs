@@ -12,6 +12,32 @@ pub struct BoardTree {
 }
 
 #[tauri::command]
+pub fn add_directory(
+    state: State<'_, BoardState>,
+    name: &str,
+    parent_id: u64,
+) -> Result<(), String> {
+    state
+        .inner()
+        .0
+        .write()
+        .unwrap()
+        .add_new_directory(name, parent_id)
+        .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn add_note(state: State<'_, BoardState>, name: &str, parent_id: u64) -> Result<(), String> {
+    state
+        .inner()
+        .0
+        .write()
+        .unwrap()
+        .add_new_note(name, parent_id)
+        .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
 pub fn add_project(state: State<'_, BoardState>, name: &str, parent_id: u64) -> Result<(), String> {
     state
         .inner()

@@ -13,7 +13,7 @@ use std::sync::RwLock;
 use api::add_project;
 use board::Board;
 
-use crate::api::get_board_tree;
+use crate::api::{add_directory, add_note, get_board_tree};
 
 #[derive(Default)]
 pub struct BoardState(RwLock<Board>);
@@ -21,7 +21,12 @@ pub struct BoardState(RwLock<Board>);
 fn main() {
     tauri::Builder::default()
         .manage(BoardState::default())
-        .invoke_handler(tauri::generate_handler![add_project, get_board_tree])
+        .invoke_handler(tauri::generate_handler![
+            add_directory,
+            add_note,
+            add_project,
+            get_board_tree
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

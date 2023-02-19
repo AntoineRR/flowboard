@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{
     api::BoardTree,
-    node::{directory::Directory, project::Project, Node},
+    node::{directory::Directory, note::Note, project::Project, Node},
     utils::{get_mut_node, get_node},
 };
 
@@ -25,6 +25,24 @@ impl Board {
             max_id: 0,
             nodes: vec![Box::<Directory>::default()], // Root node has id 0
         }
+    }
+
+    pub fn add_new_directory(&mut self, name: &str, parent_id: u64) -> Result<()> {
+        let new_id = self.max_id + 1;
+        let directory = Directory::with_name_and_id(name, new_id);
+        get_mut_node(parent_id, &mut self.nodes)?.add_child(new_id)?;
+        self.nodes.push(Box::new(directory));
+        self.max_id = new_id;
+        Ok(())
+    }
+
+    pub fn add_new_note(&mut self, name: &str, parent_id: u64) -> Result<()> {
+        let new_id = self.max_id + 1;
+        let note = Note::with_name_and_id(name, new_id);
+        get_mut_node(parent_id, &mut self.nodes)?.add_child(new_id)?;
+        self.nodes.push(Box::new(note));
+        self.max_id = new_id;
+        Ok(())
     }
 
     pub fn add_new_project(&mut self, name: &str, parent_id: u64) -> Result<()> {
@@ -69,6 +87,40 @@ mod test {
     fn test_add_project_invalid() {
         let mut board = get_board();
         let result = board.add_new_project("project", 1);
+        assert!(result.is_err());
+        assert!(board.nodes.len() == 1);
+    }
+
+    #[test]
+    fn test_add_directory_valid() {
+        let mut board = get_board();
+        let result = board.add_new_directory("directory", 0);
+        assert!(result.is_ok());
+        assert!(board.nodes.len() == 2);
+        assert!(&board.nodes[1].get_name() == "directory");
+    }
+
+    #[test]
+    fn test_add_directory_invalid() {
+        let mut board = get_board();
+        let result = board.add_new_directory("directory", 1);
+        assert!(result.is_err());
+        assert!(board.nodes.len() == 1);
+    }
+
+    #[test]
+    fn test_add_note_valid() {
+        let mut board = get_board();
+        let result = board.add_new_note("note", 0);
+        assert!(result.is_ok());
+        assert!(board.nodes.len() == 2);
+        assert!(&board.nodes[1].get_name() == "note");
+    }
+
+    #[test]
+    fn test_add_note_invalid() {
+        let mut board = get_board();
+        let result = board.add_new_note("note", 1);
         assert!(result.is_err());
         assert!(board.nodes.len() == 1);
     }

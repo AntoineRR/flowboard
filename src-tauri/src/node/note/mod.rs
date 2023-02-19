@@ -47,3 +47,13 @@ impl Node for Note {
         }
     }
 }
+
+impl Note {
+    pub fn with_name_and_id(name: &str, id: u64) -> Self {
+        Self {
+            id,
+            name: name.into(),
+            content: "".into(),
+        }
+    }
+}

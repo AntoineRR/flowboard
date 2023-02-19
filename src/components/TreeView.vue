@@ -4,7 +4,6 @@ import TreeItem from './TreeItem.vue'
 import { invoke } from "@tauri-apps/api/tauri";
 
 let treeData = ref();
-const newName = ref("");
 
 
 function updateTree() {
@@ -15,9 +14,18 @@ function updateTree() {
   });
 }
 
-async function addProject() {
-  await invoke("add_project", { name: newName.value, parentId: 0 });
-  newName.value = "";
+async function addDirectory(name, parentId) {
+  await invoke("add_directory", { name, parentId });
+  updateTree();
+}
+
+async function addNote(name, parentId) {
+  await invoke("add_note", { name, parentId });
+  updateTree();
+}
+
+async function addProject(name, parentId) {
+  await invoke("add_project", { name, parentId });
   updateTree();
 }
 
@@ -27,22 +35,16 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="card">
-    <input v-model="newName" />
-    <button type="button" @click="addProject()">Add a new project</button>
-  </div>
   <ul>
-    <TreeItem class="item" :model="treeData"></TreeItem>
+    <TreeItem :model="treeData" @add-directory="addDirectory" @add-note="addNote" @add-project="addProject">
+    </TreeItem>
   </ul>
 </template>
 
-<style>
-.item {
-  cursor: pointer;
-  line-height: 1.5;
-}
-
-.bold {
-  font-weight: bold;
+<style scoped>
+ul {
+  list-style-type: none;
+  padding-top: 5px;
+  padding-left: 10px;
 }
 </style>

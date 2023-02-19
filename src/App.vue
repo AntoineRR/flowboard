@@ -5,6 +5,12 @@ import TreeView from "./components/TreeView.vue";
 <template>
   <div class="container">
     <h1>~ Welcome to your flowboard ~</h1>
-    <TreeView />
+    <TreeView class="tree" />
   </div>
 </template>
+
+<style scoped>
+.tree {
+  text-align: left;
+}
+</style>
