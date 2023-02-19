@@ -1,10 +1,10 @@
 <script setup>
-import AddProject from "./components/AddProject.vue";
+import TreeView from "./components/TreeView.vue";
 </script>
 
 <template>
   <div class="container">
     <h1>~ Welcome to your flowboard ~</h1>
-    <AddProject />
+    <TreeView />
   </div>
 </template>

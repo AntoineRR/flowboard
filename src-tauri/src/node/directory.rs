@@ -1,7 +1,9 @@
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
 
-use super::Node;
+use crate::{api::BoardTree, utils::get_node};
+
+use super::{Node, NodeType};
 
 #[derive(Serialize, Deserialize)]
 pub struct Directory {
@@ -30,6 +32,10 @@ impl Node for Directory {
         self.name.clone()
     }
 
+    fn get_type(&self) -> NodeType {
+        NodeType::Directory
+    }
+
     fn get_children(&self) -> Option<Vec<u64>> {
         Some(self.children.clone())
     }
@@ -42,5 +48,18 @@ impl Node for Directory {
     fn remove_child(&mut self, child_id: u64) -> Result<()> {
         self.children.retain(|c| *c != child_id);
         Ok(())
+    }
+
+    fn as_board_tree(&self, nodes: &[Box<dyn Node>]) -> BoardTree {
+        BoardTree {
+            id: self.id,
+            node_type: NodeType::Directory,
+            name: self.name.clone(),
+            children: self
+                .children
+                .iter()
+                .map(|id| get_node(*id, nodes).unwrap().as_board_tree(nodes))
+                .collect(),
+        }
     }
 }

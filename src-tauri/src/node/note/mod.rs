@@ -1,9 +1,9 @@
 use anyhow::{bail, Result};
 use serde::{Deserialize, Serialize};
 
-use crate::node::LeafError;
+use crate::{api::BoardTree, node::LeafError};
 
-use super::Node;
+use super::{Node, NodeType};
 
 #[derive(Serialize, Deserialize)]
 pub struct Note {
@@ -22,6 +22,10 @@ impl Node for Note {
         self.name.clone()
     }
 
+    fn get_type(&self) -> NodeType {
+        NodeType::Note
+    }
+
     fn get_children(&self) -> Option<Vec<u64>> {
         None
     }
@@ -32,5 +36,14 @@ impl Node for Note {
 
     fn remove_child(&mut self, _child_id: u64) -> Result<()> {
         bail!(LeafError)
+    }
+
+    fn as_board_tree(&self, _nodes: &[Box<dyn Node>]) -> BoardTree {
+        BoardTree {
+            id: self.id,
+            node_type: NodeType::Note,
+            name: self.name.clone(),
+            children: vec![],
+        }
     }
 }

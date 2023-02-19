@@ -3,7 +3,9 @@ mod task;
 use anyhow::{bail, Result};
 use serde::{Deserialize, Serialize};
 
-use super::{LeafError, Node};
+use crate::api::BoardTree;
+
+use super::{LeafError, Node, NodeType};
 use task::Task;
 
 #[derive(Serialize, Deserialize)]
@@ -23,6 +25,10 @@ impl Node for Project {
         self.name.clone()
     }
 
+    fn get_type(&self) -> NodeType {
+        NodeType::Project
+    }
+
     fn get_children(&self) -> Option<Vec<u64>> {
         None
     }
@@ -33,6 +39,15 @@ impl Node for Project {
 
     fn remove_child(&mut self, _child_id: u64) -> Result<()> {
         bail!(LeafError)
+    }
+
+    fn as_board_tree(&self, _nodes: &[Box<dyn Node>]) -> BoardTree {
+        BoardTree {
+            id: self.id,
+            node_type: NodeType::Project,
+            name: self.name.clone(),
+            children: vec![],
+        }
     }
 }
 
