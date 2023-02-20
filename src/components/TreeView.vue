@@ -44,7 +44,7 @@ onMounted(async () => {
 <style scoped>
 ul {
   list-style-type: none;
-  padding-top: 5px;
-  padding-left: 10px;
+  padding: 0;
+  margin: 0;
 }
 </style>
