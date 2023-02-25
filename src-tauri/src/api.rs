@@ -52,3 +52,14 @@ pub fn add_project(state: State<'_, BoardState>, name: &str, parent_id: u64) -> 
 pub fn get_board_tree(state: State<'_, BoardState>) -> Result<BoardTree, String> {
     Ok(state.inner().0.read().unwrap().as_board_tree())
 }
+
+#[tauri::command]
+pub fn save_board(state: State<'_, BoardState>) -> Result<(), String> {
+    state
+        .inner()
+        .0
+        .write()
+        .unwrap()
+        .save()
+        .map_err(|e| e.to_string())
+}

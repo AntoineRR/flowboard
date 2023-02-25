@@ -13,7 +13,7 @@ use std::sync::RwLock;
 use api::add_project;
 use board::Board;
 
-use crate::api::{add_directory, add_note, get_board_tree};
+use crate::api::{add_directory, add_note, get_board_tree, save_board};
 
 #[derive(Default)]
 pub struct BoardState(RwLock<Board>);
@@ -25,7 +25,8 @@ fn main() {
             add_directory,
             add_note,
             add_project,
-            get_board_tree
+            get_board_tree,
+            save_board
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -21,10 +21,10 @@ impl Default for Board {
 
 impl Board {
     pub fn load_or_create() -> Self {
-        Self {
+        load().unwrap_or_else(|_| Self {
             max_id: 0,
             nodes: vec![Box::<Directory>::default()], // Root node has id 0
-        }
+        })
     }
 
     pub fn add_new_directory(&mut self, name: &str, parent_id: u64) -> Result<()> {
@@ -57,6 +57,15 @@ impl Board {
     pub fn as_board_tree(&self) -> BoardTree {
         get_node(0, &self.nodes).unwrap().as_board_tree(&self.nodes)
     }
+
+    pub fn save(&self) -> Result<()> {
+        serde_json::to_writer_pretty(std::fs::File::create("board.json")?, &self)?;
+        Ok(())
+    }
+}
+
+fn load() -> Result<Board> {
+    Ok(serde_json::from_reader(std::fs::File::open("board.json")?)?)
 }
 
 #[cfg(test)]

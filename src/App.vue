@@ -1,11 +1,16 @@
 <script setup>
 import TreeView from "./components/TreeView.vue";
+import { invoke } from "@tauri-apps/api/tauri";
+
+async function saveBoard() {
+  await invoke("save_board");
+}
 </script>
 
 <template>
   <div class="container">
     <div class="sidebar">
-      <TreeView class="tree" />
+      <TreeView class="tree" @save-board="saveBoard" />
     </div>
     <div class="main">
       <h1>~ Welcome to your flowboard ~</h1>
