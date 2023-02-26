@@ -5,7 +5,7 @@ use crate::{api::BoardTree, node::LeafError};
 
 use super::{Node, NodeType};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Note {
     id: u64,
     name: String,
@@ -46,6 +46,14 @@ impl Node for Note {
             children: vec![],
         }
     }
+
+    fn as_any(&self) -> &dyn std::any::Any {
+        self
+    }
+
+    fn as_any_mut(&mut self) -> &mut dyn std::any::Any {
+        self
+    }
 }
 
 impl Note {
@@ -55,5 +63,9 @@ impl Note {
             name: name.into(),
             content: "".into(),
         }
+    }
+
+    pub fn set_content(&mut self, content: &str) {
+        self.content = content.into();
     }
 }

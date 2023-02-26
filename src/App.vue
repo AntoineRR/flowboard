@@ -1,19 +1,28 @@
 <script setup>
-import TreeView from "./components/TreeView.vue";
+import { ref, watch } from "vue";
 import { invoke } from "@tauri-apps/api/tauri";
+
+import TreeView from "./components/TreeView.vue";
+import ContentView from "./components/ContentView.vue";
+
+let contentId = ref()
 
 async function saveBoard() {
   await invoke("save_board");
+}
+
+function changeContentId(id) {
+  contentId.value = id;
 }
 </script>
 
 <template>
   <div class="container">
     <div class="sidebar">
-      <TreeView class="tree" @save-board="saveBoard" />
+      <TreeView class="tree" @save-board="saveBoard" @load-content="changeContentId" />
     </div>
     <div class="main">
-      <h1>~ Welcome to your flowboard ~</h1>
+      <ContentView :id="contentId" />
     </div>
   </div>
 </template>

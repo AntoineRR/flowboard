@@ -8,7 +8,7 @@ use crate::api::BoardTree;
 use super::{LeafError, Node, NodeType};
 use task::Task;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Project {
     id: u64,
     name: String,
@@ -48,6 +48,14 @@ impl Node for Project {
             name: self.name.clone(),
             children: vec![],
         }
+    }
+
+    fn as_any(&self) -> &dyn std::any::Any {
+        self
+    }
+
+    fn as_any_mut(&mut self) -> &mut dyn std::any::Any {
+        self
     }
 }
 

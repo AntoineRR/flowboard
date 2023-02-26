@@ -13,7 +13,10 @@ use std::sync::RwLock;
 use api::add_project;
 use board::Board;
 
-use crate::api::{add_directory, add_note, get_board_tree, save_board};
+use crate::api::{
+    add_directory, add_note, get_board_tree, get_node_type, get_note, get_project, save_board,
+    set_note_content,
+};
 
 #[derive(Default)]
 pub struct BoardState(RwLock<Board>);
@@ -25,6 +28,10 @@ fn main() {
             add_directory,
             add_note,
             add_project,
+            set_note_content,
+            get_node_type,
+            get_note,
+            get_project,
             get_board_tree,
             save_board
         ])

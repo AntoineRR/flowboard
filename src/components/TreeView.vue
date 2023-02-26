@@ -5,7 +5,7 @@ import { invoke } from "@tauri-apps/api/tauri";
 
 let treeData = ref();
 
-const emit = defineEmits(['save-board'])
+const emit = defineEmits(['save-board', 'load-content'])
 
 function updateTree() {
   invoke("get_board_tree").then((data) => {
@@ -40,7 +40,8 @@ onMounted(async () => {
 
 <template>
   <ul>
-    <TreeItem :model="treeData" @add-directory="addDirectory" @add-note="addNote" @add-project="addProject">
+    <TreeItem :model="treeData" @add-directory="addDirectory" @add-note="addNote" @add-project="addProject"
+      @load-content="(id) => $emit('load-content', id)">
     </TreeItem>
   </ul>
 </template>

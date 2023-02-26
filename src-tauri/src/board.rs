@@ -1,4 +1,4 @@
-use anyhow::Result;
+use anyhow::{anyhow, Result};
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -51,6 +51,20 @@ impl Board {
         get_mut_node(parent_id, &mut self.nodes)?.add_child(new_id)?;
         self.nodes.push(Box::new(project));
         self.max_id = new_id;
+        Ok(())
+    }
+
+    #[allow(clippy::borrowed_box)]
+    pub fn get_node(&self, id: u64) -> Result<&Box<dyn Node>> {
+        get_node(id, &self.nodes)
+    }
+
+    pub fn set_note_content(&mut self, id: u64, content: &str) -> Result<()> {
+        get_mut_node(id, &mut self.nodes)?
+            .as_any_mut()
+            .downcast_mut::<Note>()
+            .ok_or(anyhow!("id {id} does not correspond to a Note node"))?
+            .set_content(content);
         Ok(())
     }
 

@@ -1,5 +1,9 @@
-use crate::{node::NodeType, BoardState};
+use crate::{
+    node::{note::Note, project::Project, NodeType},
+    BoardState,
+};
 
+use anyhow::anyhow;
 use serde::{Deserialize, Serialize};
 use tauri::State;
 
@@ -45,6 +49,65 @@ pub fn add_project(state: State<'_, BoardState>, name: &str, parent_id: u64) -> 
         .write()
         .unwrap()
         .add_new_project(name, parent_id)
+        .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn set_note_content(
+    state: State<'_, BoardState>,
+    id: u64,
+    content: &str,
+) -> Result<(), String> {
+    state
+        .inner()
+        .0
+        .write()
+        .unwrap()
+        .set_note_content(id, content)
+        .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn get_node_type(state: State<'_, BoardState>, id: u64) -> Result<NodeType, String> {
+    state
+        .inner()
+        .0
+        .read()
+        .unwrap()
+        .get_node(id)
+        .map(|node| node.get_type())
+        .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn get_note(state: State<'_, BoardState>, id: u64) -> Result<Note, String> {
+    state
+        .inner()
+        .0
+        .read()
+        .unwrap()
+        .get_node(id)
+        .map_err(|e| e.to_string())?
+        .as_any()
+        .downcast_ref::<Note>()
+        .ok_or(anyhow!("Node with id {id} is not a Note"))
+        .cloned()
+        .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn get_project(state: State<'_, BoardState>, id: u64) -> Result<Project, String> {
+    state
+        .inner()
+        .0
+        .read()
+        .unwrap()
+        .get_node(id)
+        .map_err(|e| e.to_string())?
+        .as_any()
+        .downcast_ref::<Project>()
+        .ok_or(anyhow!("Node with id {id} is not a Project"))
+        .cloned()
         .map_err(|e| e.to_string())
 }
 

@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 enum TaskStatus {
     Todo,
     Doing,
@@ -8,7 +8,7 @@ enum TaskStatus {
     Archived,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Clone, Serialize, Deserialize)]
 pub struct Task {
     name: String,
     status: TaskStatus,

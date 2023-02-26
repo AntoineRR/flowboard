@@ -1,4 +1,4 @@
-use std::{error::Error, fmt::Display};
+use std::{any::Any, error::Error, fmt::Display};
 
 use anyhow::Result;
 use serde::{Deserialize, Serialize};
@@ -25,6 +25,8 @@ pub trait Node: Send + Sync {
     fn add_child(&mut self, child_id: u64) -> Result<()>;
     fn remove_child(&mut self, child_id: u64) -> Result<()>;
     fn as_board_tree(&self, nodes: &[Box<dyn Node>]) -> BoardTree;
+    fn as_any(&self) -> &dyn Any;
+    fn as_any_mut(&mut self) -> &mut dyn Any;
 }
 
 #[derive(Debug)]
