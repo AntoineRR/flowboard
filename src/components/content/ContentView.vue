@@ -1,13 +1,14 @@
 <script setup>
 import { watch, ref } from 'vue'
 import { invoke } from '@tauri-apps/api/tauri';
+import NoteView from './NoteView.vue';
 
 const props = defineProps({ id: Number });
 
+let node_type;
 let content = ref();
 
 watch(() => props.id, async (id) => {
-  let node_type;
   await invoke("get_node_type", { id }).then((data) => {
     node_type = data;
   }).catch((err) => {
@@ -26,6 +27,8 @@ watch(() => props.id, async (id) => {
   <div>
     <h1 v-if="!!content">{{ content.name }}</h1>
     <h1 v-else>~ Welcome to your flowboard ~</h1>
-    <p v-if="!!content">content for {{ id }}</p>
+    <div v-if="!!content">
+      <NoteView v-if="node_type === 'Note'" :model="content" @save-board="() => $emit('save-board')" />
+    </div>
   </div>
 </template>

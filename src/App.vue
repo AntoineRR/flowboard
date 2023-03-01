@@ -1,9 +1,9 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/tauri";
 
 import TreeView from "./components/TreeView.vue";
-import ContentView from "./components/ContentView.vue";
+import ContentView from "./components/content/ContentView.vue";
 
 let contentId = ref()
 
@@ -22,7 +22,7 @@ function changeContentId(id) {
       <TreeView class="tree" @save-board="saveBoard" @load-content="changeContentId" />
     </div>
     <div class="main">
-      <ContentView :id="contentId" />
+      <ContentView :id="contentId" @save-board="saveBoard" />
     </div>
   </div>
 </template>
