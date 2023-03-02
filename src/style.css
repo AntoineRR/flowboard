@@ -27,6 +27,7 @@ body, html {
 
 h1 {
   text-align: center;
+  margin: 0px;
 }
 
 input,

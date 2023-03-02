@@ -24,7 +24,7 @@ watch(() => props.id, async (id) => {
 </script>
 
 <template>
-  <div>
+  <div class="wrapper">
     <h1 v-if="!!content">{{ content.name }}</h1>
     <h1 v-else>~ Welcome to your flowboard ~</h1>
     <div v-if="!!content">
@@ -32,3 +32,19 @@ watch(() => props.id, async (id) => {
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+.wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  h1 {
+    padding: 20px;
+  }
+
+  div {
+    flex: 1;
+  }
+}
+</style>
