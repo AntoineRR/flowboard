@@ -1,8 +1,8 @@
-<script setup>
+<script setup lang="ts">
 import { watch, onMounted, ref } from 'vue';
 import { invoke } from '@tauri-apps/api/tauri';
 
-const props = defineProps({ model: Object });
+const props = defineProps({ model: null });
 const emit = defineEmits(['save-board'])
 
 let content = ref("");

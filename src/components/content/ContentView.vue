@@ -1,16 +1,16 @@
-<script setup>
+<script setup lang="ts">
 import { watch, ref } from 'vue'
 import { invoke } from '@tauri-apps/api/tauri';
 import NoteView from './NoteView.vue';
 
 const props = defineProps({ id: Number });
 
-let node_type;
+let node_type: string;
 let content = ref();
 
 watch(() => props.id, async (id) => {
   await invoke("get_node_type", { id }).then((data) => {
-    node_type = data;
+    node_type = data as string;
   }).catch((err) => {
     console.log(err);
   });

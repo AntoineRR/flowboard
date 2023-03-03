@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import TreeItem from './TreeItem.vue'
 import { invoke } from "@tauri-apps/api/tauri";
@@ -15,19 +15,19 @@ function updateTree() {
   });
 }
 
-async function addDirectory(name, parentId) {
+async function addDirectory(name: string, parentId: number) {
   await invoke("add_directory", { name, parentId });
   updateTree();
   emit('save-board')
 }
 
-async function addNote(name, parentId) {
+async function addNote(name: string, parentId: number) {
   await invoke("add_note", { name, parentId });
   updateTree();
   emit('save-board')
 }
 
-async function addProject(name, parentId) {
+async function addProject(name: string, parentId: number) {
   await invoke("add_project", { name, parentId });
   updateTree();
   emit('save-board')
@@ -41,7 +41,7 @@ onMounted(async () => {
 <template>
   <ul>
     <TreeItem :model="treeData" @add-directory="addDirectory" @add-note="addNote" @add-project="addProject"
-      @load-content="(id) => $emit('load-content', id)">
+      @load-content="(id: number) => $emit('load-content', id)">
     </TreeItem>
   </ul>
 </template>

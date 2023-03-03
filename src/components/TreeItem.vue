@@ -1,5 +1,7 @@
-<script setup>
-defineProps({ model: Object })
+<script setup lang="ts">
+defineProps({
+  model: null
+})
 </script>
 
 <template>
