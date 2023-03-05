@@ -1,25 +1,61 @@
-<script setup>
-import { ref } from "vue";
+<script setup lang="ts">
+import { ref, onMounted } from "vue";
 import { invoke } from "@tauri-apps/api/tauri";
 
 import TreeView from "./components/TreeView.vue";
 import ContentView from "./components/content/ContentView.vue";
 
 let contentId = ref()
+let treeData = ref();
 
 async function saveBoard() {
   await invoke("save_board");
 }
 
-function changeContentId(id) {
+async function addElement(type: string, name: string, parentId: number) {
+  if (type === "Directory") {
+    await invoke("add_directory", { name, parentId });
+  } else if (type === "Note") {
+    await invoke("add_note", { name, parentId });
+  } else if (type === "Project") {
+    await invoke("add_project", { name, parentId });
+  }
+  updateTree();
+  saveBoard();
+}
+
+function changeContentId(id: number) {
   contentId.value = id;
 }
+
+function updateTree() {
+  invoke("get_board_tree").then((data) => {
+    treeData.value = data;
+    console.log(data);
+  }).catch((err) => {
+    console.log(err);
+  });
+}
+
+onMounted(async () => {
+  updateTree();
+})
+
 </script>
 
 <template>
   <div class="container">
     <div class="sidebar">
-      <TreeView class="tree" @save-board="saveBoard" @load-content="changeContentId" />
+      <div class="title">
+        <h1>Flowboard</h1>
+        <div>
+          <button type="button" @click="addElement('Directory', 'new directory', 0)">d+</button>
+          <button type="button" @click="addElement('Note', 'new note', 0)">n+</button>
+          <button type="button" @click="addElement('Project', 'new project', 0)">p+</button>
+        </div>
+      </div>
+      <TreeView class="tree" :tree-data="treeData" @add-element="addElement" @save-board="saveBoard"
+        @load-content="changeContentId" />
     </div>
     <div class="main">
       <ContentView :id="contentId" @save-board="saveBoard" />
@@ -27,7 +63,7 @@ function changeContentId(id) {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .container {
   display: flex;
   flex-direction: row;
@@ -42,6 +78,17 @@ function changeContentId(id) {
   left: 0;
   bottom: 0;
   overflow-y: auto;
+
+  .title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    div button {
+      padding: 0px;
+    }
+  }
 }
 
 .tree {

@@ -1,7 +1,5 @@
 <script setup lang="ts">
-defineProps({
-  model: null
-})
+defineProps({ model: null })
 </script>
 
 <template>
@@ -15,15 +13,14 @@ defineProps({
           {{ model.name }}
         </p>
         <div v-if="model.node_type === 'Directory'">
-          <button type="button" @click="$emit('add-directory', 'new directory', model.id)">d+</button>
-          <button type="button" @click="$emit('add-note', 'new note', model.id)">n+</button>
-          <button type="button" @click="$emit('add-project', 'new project', model.id)">p+</button>
+          <button type="button" @click="$emit('add-element', 'Directory', 'new directory', model.id)">d+</button>
+          <button type="button" @click="$emit('add-element', 'Note', 'new note', model.id)">n+</button>
+          <button type="button" @click="$emit('add-element', 'Project', 'new project', model.id)">p+</button>
         </div>
       </div>
       <ul v-for="child in model.children" :key="child.id">
-        <TreeItem :model="child" @add-directory="(name, id) => $emit('add-directory', name, id)"
-          @add-note="(name, id) => $emit('add-note', name, id)"
-          @add-project="(name, id) => $emit('add-project', name, id)" @load-content="(id) => $emit('load-content', id)" />
+        <TreeItem :model="child" @add-element="(type, name, id) => $emit('add-element', type, name, id)"
+          @load-content="(id) => $emit('load-content', id)" />
       </ul>
     </div>
   </li>
