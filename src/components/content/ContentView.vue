@@ -7,6 +7,7 @@ const props = defineProps({ id: Number });
 
 let node_type: string;
 let content = ref();
+let edit = ref(false);
 
 watch(() => props.id, async (id) => {
   await invoke("get_node_type", { id }).then((data) => {
@@ -25,10 +26,16 @@ watch(() => props.id, async (id) => {
 
 <template>
   <div class="wrapper">
-    <h1 v-if="!!content">{{ content.name }}</h1>
-    <h1 v-else>~ Welcome to your flowboard ~</h1>
+    <div class="top-bar">
+      <div v-if="!!content">
+        <h1>{{ content.name }}</h1>
+        <button v-if="edit" v-on:click="edit = false">Save</button>
+        <button v-else v-on:click="edit = true">Edit</button>
+      </div>
+      <h1 v-else>~ Welcome to your flowboard ~</h1>
+    </div>
     <div v-if="!!content">
-      <NoteView v-if="node_type === 'Note'" :model="content" @save-board="() => $emit('save-board')" />
+      <NoteView v-if="node_type === 'Note'" :model="content" :edit="edit" @save-board="() => $emit('save-board')" />
     </div>
   </div>
 </template>
@@ -38,6 +45,16 @@ watch(() => props.id, async (id) => {
   height: 100%;
   display: flex;
   flex-direction: column;
+
+  .top-bar {
+    flex: 0;
+
+    div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
 
   h1 {
     padding: 20px;
