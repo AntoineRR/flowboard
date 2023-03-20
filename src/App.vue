@@ -24,6 +24,12 @@ async function addElement(type: string, name: string, parentId: number) {
   saveBoard();
 }
 
+async function deleteElement(id: number, parentId: number) {
+  await invoke("delete_node", { id, parentId, recursive: false });
+  updateTree();
+  saveBoard();
+}
+
 function changeContentId(id: number) {
   contentId.value = id;
 }
@@ -55,7 +61,7 @@ onMounted(async () => {
         </div>
       </div>
       <TreeView class="tree" :tree-data="treeData" @add-element="addElement" @save-board="saveBoard"
-        @load-content="changeContentId" />
+        @delete-element="deleteElement" @load-content="changeContentId" />
     </div>
     <div class="main">
       <ContentView :id="contentId" @save-board="saveBoard" />

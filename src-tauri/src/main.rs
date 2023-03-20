@@ -14,8 +14,8 @@ use api::add_project;
 use board::Board;
 
 use crate::api::{
-    add_directory, add_note, get_board_tree, get_node_type, get_note, get_project, save_board,
-    set_note_content,
+    add_directory, add_note, delete_node, get_board_tree, get_node_type, get_note, get_project,
+    save_board, set_note_content,
 };
 
 #[derive(Default)]
@@ -28,6 +28,7 @@ fn main() {
             add_directory,
             add_note,
             add_project,
+            delete_node,
             set_note_content,
             get_node_type,
             get_note,

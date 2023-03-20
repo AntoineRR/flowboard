@@ -54,6 +54,28 @@ impl Board {
         Ok(())
     }
 
+    pub fn delete_node(&mut self, id: u64, parent_id: u64, recursive: bool) -> Result<()> {
+        if id == 0 {
+            return Err(anyhow!("Cannot delete root node"));
+        }
+        if recursive {
+            if let Some(children) = get_node(id, &self.nodes)?.get_children() {
+                for child in children {
+                    self.delete_node(child, id, true)?;
+                }
+            }
+        } else if let Some(children) = get_node(id, &self.nodes)?.get_children() {
+            for child in children {
+                let parent = get_mut_node(parent_id, &mut self.nodes)?;
+                parent.add_child(child)?;
+            }
+        }
+        let parent = get_mut_node(parent_id, &mut self.nodes)?;
+        parent.remove_child(id)?;
+        self.nodes.retain(|n| n.get_id() != id);
+        Ok(())
+    }
+
     #[allow(clippy::borrowed_box)]
     pub fn get_node(&self, id: u64) -> Result<&Box<dyn Node>> {
         get_node(id, &self.nodes)

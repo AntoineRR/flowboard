@@ -8,7 +8,8 @@ defineProps({ treeData: null })
   <ul>
     <div v-if="!!treeData" v-for="item in treeData.children" :key="item.id">
       <TreeItem :model="item" @add-element="(type, name, id) => $emit('add-element', type, name, id)"
-        @load-content="(id: number) => $emit('load-content', id)">
+        @load-content="(id: number) => $emit('load-content', id)"
+        @delete-element="(id, parentId) => !!parentId ? $emit('delete-element', id, parentId) : $emit('delete-element', id, 0)">
       </TreeItem>
     </div>
   </ul>

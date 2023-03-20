@@ -68,6 +68,22 @@ pub fn set_note_content(
 }
 
 #[tauri::command]
+pub fn delete_node(
+    state: State<'_, BoardState>,
+    id: u64,
+    parent_id: u64,
+    recursive: bool,
+) -> Result<(), String> {
+    state
+        .inner()
+        .0
+        .write()
+        .unwrap()
+        .delete_node(id, parent_id, recursive)
+        .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
 pub fn get_node_type(state: State<'_, BoardState>, id: u64) -> Result<NodeType, String> {
     state
         .inner()
