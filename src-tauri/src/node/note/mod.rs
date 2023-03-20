@@ -68,4 +68,9 @@ impl Note {
     pub fn set_content(&mut self, content: &str) {
         self.content = content.into();
     }
+
+    #[cfg(test)]
+    pub fn get_content(&self) -> String {
+        self.content.clone()
+    }
 }

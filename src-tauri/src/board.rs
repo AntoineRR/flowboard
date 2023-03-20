@@ -15,16 +15,16 @@ pub struct Board {
 
 impl Default for Board {
     fn default() -> Self {
-        Self::load_or_create()
+        Self {
+            max_id: 0,
+            nodes: vec![Box::<Directory>::default()], // Root node has id 0
+        }
     }
 }
 
 impl Board {
     pub fn load_or_create() -> Self {
-        load().unwrap_or_else(|_| Self {
-            max_id: 0,
-            nodes: vec![Box::<Directory>::default()], // Root node has id 0
-        })
+        load().unwrap_or_default()
     }
 
     pub fn add_new_directory(&mut self, name: &str, parent_id: u64) -> Result<()> {
@@ -57,6 +57,13 @@ impl Board {
     pub fn delete_node(&mut self, id: u64, parent_id: u64, recursive: bool) -> Result<()> {
         if id == 0 {
             return Err(anyhow!("Cannot delete root node"));
+        }
+        if !get_node(parent_id, &self.nodes)?
+            .get_children()
+            .ok_or(anyhow!("Cannot get child of node {parent_id}"))?
+            .contains(&id)
+        {
+            return Err(anyhow!("Node {id} is not a child of node {parent_id}"));
         }
         if recursive {
             if let Some(children) = get_node(id, &self.nodes)?.get_children() {
@@ -109,7 +116,7 @@ mod test {
     use super::Board;
 
     fn get_board() -> Board {
-        Board::load_or_create()
+        Board::default()
     }
 
     #[test]
@@ -181,5 +188,70 @@ mod test {
         for (id, child) in board_tree.children.iter().enumerate() {
             assert!(child.name == format!("project{}", id + 1));
         }
+    }
+
+    #[test]
+    fn test_set_note_content_valid() {
+        let mut board = get_board();
+        board.add_new_note("note", 0).unwrap();
+        board.set_note_content(1, "content").unwrap();
+        assert!(
+            board
+                .get_node(1)
+                .unwrap()
+                .as_any()
+                .downcast_ref::<super::Note>()
+                .unwrap()
+                .get_content()
+                == "content"
+        );
+    }
+
+    #[test]
+    fn test_set_note_content_invalid() {
+        let mut board = get_board();
+        board.add_new_project("project", 0).unwrap();
+        let result = board.set_note_content(1, "content");
+        assert!(result.is_err());
+    }
+
+    #[test]
+    fn test_delete_node_valid() {
+        let mut board = get_board();
+        board.add_new_project("project", 0).unwrap();
+        assert!(board.nodes.len() == 2);
+        board.delete_node(1, 0, false).unwrap();
+        assert!(board.nodes.len() == 1);
+    }
+
+    #[test]
+    fn test_delete_node_invalid_id() {
+        let mut board = get_board();
+        board.add_new_project("project", 0).unwrap();
+        assert!(board.nodes.len() == 2);
+        let result = board.delete_node(2, 0, false);
+        assert!(result.is_err());
+        assert!(board.nodes.len() == 2);
+    }
+
+    #[test]
+    fn test_delete_node_invalid_parent_id() {
+        let mut board = get_board();
+        board.add_new_project("project", 0).unwrap();
+        assert!(board.nodes.len() == 2);
+        let result = board.delete_node(1, 1, false);
+        assert!(result.is_err());
+        assert!(board.nodes.len() == 2);
+    }
+
+    #[test]
+    fn test_delete_node_recursive() {
+        let mut board = get_board();
+        board.add_new_project("project", 0).unwrap();
+        board.add_new_directory("directory", 0).unwrap();
+        board.add_new_note("note", 2).unwrap();
+        assert!(board.nodes.len() == 4);
+        board.delete_node(2, 0, true).unwrap();
+        assert!(board.nodes.len() == 2);
     }
 }

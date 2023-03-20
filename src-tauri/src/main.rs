@@ -18,8 +18,13 @@ use crate::api::{
     save_board, set_note_content,
 };
 
-#[derive(Default)]
 pub struct BoardState(RwLock<Board>);
+
+impl Default for BoardState {
+    fn default() -> Self {
+        Self(RwLock::new(Board::load_or_create()))
+    }
+}
 
 fn main() {
     tauri::Builder::default()
