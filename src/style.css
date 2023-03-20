@@ -53,6 +53,27 @@ button:hover {
   border-color: #396cd8;
 }
 
+.invisible-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: none;
+}
+
+.icon-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  box-shadow: none;
+}
+
+.icon-button:hover {
+  border-color: transparent;
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.8));
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     color: #f6f6f6;

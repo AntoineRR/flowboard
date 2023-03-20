@@ -55,9 +55,15 @@ onMounted(async () => {
       <div class="title">
         <h1>Flowboard</h1>
         <div>
-          <button type="button" @click="addElement('Directory', 'new directory', 0)">d+</button>
-          <button type="button" @click="addElement('Note', 'new note', 0)">n+</button>
-          <button type="button" @click="addElement('Project', 'new project', 0)">p+</button>
+          <button class="icon-button" type="button" @click="addElement('Directory', 'new directory', 0)">
+            <fa-icon icon="fa-solid fa-folder-plus"></fa-icon>
+          </button>
+          <button class="icon-button" type="button" @click="addElement('Note', 'new note', 0)">
+            <fa-icon icon="fa-solid fa-note-sticky"></fa-icon>
+          </button>
+          <button class="icon-button" type="button" @click="addElement('Project', 'new project', 0)">
+            <fa-icon icon="fa-solid fa-lightbulb"></fa-icon>
+          </button>
         </div>
       </div>
       <TreeView class="tree" :tree-data="treeData" @add-element="addElement" @save-board="saveBoard"

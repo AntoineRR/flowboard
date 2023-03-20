@@ -6,20 +6,31 @@ defineProps({ model: null })
   <li>
     <div v-if="model">
       <div class="content">
-        <button type="button" v-if="model.node_type !== 'Directory'" @click="$emit('load-content', model.id)">
+        <button class="invisible-button" type="button" v-if="model.node_type !== 'Directory'"
+          @click="$emit('load-content', model.id)">
           {{ model.name }}
         </button>
         <p v-else>
           {{ model.name }}
         </p>
         <div v-if="model.node_type === 'Directory'">
-          <button type="button" @click="$emit('add-element', 'Directory', 'new directory', model.id)">d+</button>
-          <button type="button" @click="$emit('add-element', 'Note', 'new note', model.id)">n+</button>
-          <button type="button" @click="$emit('add-element', 'Project', 'new project', model.id)">p+</button>
-          <button type="button" @click="$emit('delete-element', model.id, null)">D</button>
+          <button class="icon-button" type="button" @click="$emit('add-element', 'Directory', 'new directory', model.id)">
+            <fa-icon icon="fa-solid fa-folder-plus"></fa-icon>
+          </button>
+          <button class="icon-button" type="button" @click="$emit('add-element', 'Note', 'new note', model.id)">
+            <fa-icon icon="fa-solid fa-note-sticky"></fa-icon>
+          </button>
+          <button class="icon-button" type="button" @click="$emit('add-element', 'Project', 'new project', model.id)">
+            <fa-icon icon="fa-solid fa-lightbulb"></fa-icon>
+          </button>
+          <button class="icon-button" type="button" @click="$emit('delete-element', model.id, null)">
+            <fa-icon icon="fa-solid fa-trash"></fa-icon>
+          </button>
         </div>
         <div v-else>
-          <button type="button" @click="$emit('delete-element', model.id, null)">D</button>
+          <button class="icon-button" type="button" @click="$emit('delete-element', model.id, null)">
+            <fa-icon icon="fa-solid fa-trash"></fa-icon>
+          </button>
         </div>
       </div>
       <ul v-for="child in model.children" :key="child.id">
@@ -48,12 +59,5 @@ ul {
   list-style-type: none;
   padding-top: 5px;
   padding-left: 10px;
-}
-
-button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
 }
 </style>

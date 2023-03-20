@@ -29,8 +29,12 @@ watch(() => props.id, async (id) => {
     <div class="top-bar">
       <div v-if="!!content">
         <h1>{{ content.name }}</h1>
-        <button v-if="edit" v-on:click="edit = false">Save</button>
-        <button v-else v-on:click="edit = true">Edit</button>
+        <button class="icon-button" v-if="edit" v-on:click="edit = false">
+          <fa-icon icon="fa-solid fa-floppy-disk"></fa-icon>
+        </button>
+        <button class="icon-button" v-else v-on:click="edit = true">
+          <fa-icon icon="fa-solid fa-pen"></fa-icon>
+        </button>
       </div>
       <h1 v-else>~ Welcome to your flowboard ~</h1>
     </div>
