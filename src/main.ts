@@ -6,7 +6,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faFolderPlus, faNoteSticky, faLightbulb, faTrash, faPen, faFloppyDisk } from '@fortawesome/free-solid-svg-icons'
+import { faFolderPlus, faNoteSticky, faLightbulb, faTrash, faPen, faFloppyDisk, faPlus, faEllipsis } from '@fortawesome/free-solid-svg-icons'
+import { ClickOutside } from "./directives";
 
 library.add(faFolderPlus);
 library.add(faNoteSticky);
@@ -14,5 +15,9 @@ library.add(faLightbulb);
 library.add(faTrash);
 library.add(faPen);
 library.add(faFloppyDisk);
+library.add(faPlus);
+library.add(faEllipsis);
 
-createApp(App).component('fa-icon', FontAwesomeIcon).mount("#app");
+const app = createApp(App)
+app.component('fa-icon', FontAwesomeIcon).mount("#app");
+app.directive('click-outside', ClickOutside);

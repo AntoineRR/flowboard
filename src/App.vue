@@ -37,7 +37,6 @@ function changeContentId(id: number) {
 function updateTree() {
   invoke("get_board_tree").then((data) => {
     treeData.value = data;
-    console.log(data);
   }).catch((err) => {
     console.log(err);
   });
