@@ -8,6 +8,13 @@ import ContentView from "./components/content/ContentView.vue";
 let contentId = ref()
 let treeData = ref();
 
+defineEmits<{
+  (e: 'add-element', type: string, name: string, parent_id: number): void,
+  (e: 'delete-element', id: number, parent_id: number | null): void,
+  (e: 'load-content', id: number): void,
+  (e: 'save-board'): void
+}>()
+
 async function saveBoard() {
   await invoke("save_board");
 }
@@ -24,7 +31,7 @@ async function addElement(type: string, name: string, parentId: number) {
   saveBoard();
 }
 
-async function deleteElement(id: number, parentId: number) {
+async function deleteElement(id: number, parentId: number | null) {
   await invoke("delete_node", { id, parentId, recursive: false });
   updateTree();
   saveBoard();
@@ -65,8 +72,10 @@ onMounted(async () => {
           </button>
         </div>
       </div>
-      <TreeView class="tree" :tree-data="treeData" @add-element="addElement" @save-board="saveBoard"
-        @delete-element="deleteElement" @load-content="changeContentId" />
+      <div class="tree">
+        <TreeView :tree-data="treeData" @add-element="addElement" @delete-element="deleteElement"
+          @load-content="changeContentId" />
+      </div>
     </div>
     <div class="main">
       <ContentView :id="contentId" @save-board="saveBoard" />

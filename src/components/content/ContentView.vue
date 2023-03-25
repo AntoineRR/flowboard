@@ -4,6 +4,9 @@ import { invoke } from '@tauri-apps/api/tauri';
 import NoteView from './NoteView.vue';
 
 const props = defineProps({ id: Number });
+defineEmits<{
+  (e: 'save-board'): void
+}>();
 
 let node_type: string;
 let content = ref();
