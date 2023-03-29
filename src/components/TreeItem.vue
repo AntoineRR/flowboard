@@ -113,7 +113,7 @@ function toggleFold() {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: radial-gradient(300px circle at var(--x) var(--y), #1cd1c6 0, #407cff 50%, transparent 100%);
+  background: radial-gradient(300px circle at var(--x) var(--y), var(--highlight-color-one) 0, var(--highlight-color-two) 50%, transparent 100%);
   --x: 0;
   --y: 0;
 
@@ -135,7 +135,7 @@ function toggleFold() {
     padding-top: 5px;
     padding-bottom: 5px;
     border-radius: 8px;
-    background-color: antiquewhite;
+    background-color: var(--surface-color-one);
   }
 }
 
@@ -157,14 +157,14 @@ function toggleFold() {
     div {
       width: 4px;
       border-radius: 2px;
-      background-color: #dddddd;
+      background-color: var(--surface-color-one);
     }
   }
 
   .fold-toggle:hover div {
     width: 8px;
     border-radius: 4px;
-    background-color: #9c9c9c;
+    background-color: var(--surface-color-two);
     cursor: pointer;
   }
 }

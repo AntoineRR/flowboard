@@ -93,11 +93,13 @@ onMounted(async () => {
 .sidebar {
   width: 300px;
   padding: 20px;
-  border-right: 1px solid #b5b5b5;
+  border-right: 1px solid var(--overlay-color);
   top: 0;
   left: 0;
   bottom: 0;
   overflow-y: auto;
+
+  background-color: var(--background-color-two);
 
   .title {
     display: flex;

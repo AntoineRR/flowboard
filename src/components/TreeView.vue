@@ -68,20 +68,4 @@ ul {
   list-style-type: none;
   margin: 0;
 }
-
-.fold-toggle {
-  margin-left: 2px;
-  margin-right: 5px;
-  width: 4px;
-  border-radius: 2px;
-  background-color: #dddddd;
-}
-
-.fold-toggle:hover {
-  margin-left: 0px;
-  margin-right: 3px;
-  width: 8px;
-  border-radius: 4px;
-  background-color: #9c9c9c;
-}
 </style>

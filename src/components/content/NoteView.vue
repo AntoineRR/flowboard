@@ -24,7 +24,7 @@ watch(() => props.model, async (model) => {
 
 <template>
   <div class="content" v-if="edit">
-    <textarea v-model="content" v-on:focusout="event => saveNote()" />
+    <textarea v-model="content" v-on:focusout="_ => saveNote()" />
   </div>
   <div class="content" v-else>
     <vue-markdown :source="content" />
