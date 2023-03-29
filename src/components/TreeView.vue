@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onUpdated, watch } from 'vue';
+import { onUpdated } from 'vue';
 import TreeItem from './TreeItem.vue'
 
 const props = defineProps({ treeData: null })

@@ -54,36 +54,44 @@ function toggleFold() {
               {{ model.name }}
             </p>
             <div class="button-container">
-              <div class="context-menu-reference" v-if="model.node_type === 'Directory'">
+              <div class="context-menu-reference icon-container" v-if="model.node_type === 'Directory'">
                 <button class="icon-button" :class="'add-include-' + model.id" type="button"
                   @click="toggleAddContextMenu">
                   <fa-icon icon="fa-solid fa-plus"></fa-icon>
                 </button>
                 <div v-if="showAddContextMenu" class="context-menu"
                   v-click-outside="{ handler: toggleAddContextMenu, include: addIncluded }">
-                  <button class="icon-button" type="button"
-                    @click="$emit('add-element', 'Directory', 'new directory', model.id)">
-                    <fa-icon icon="fa-solid fa-folder-plus"></fa-icon>
-                  </button>
-                  <button class="icon-button" type="button" @click="$emit('add-element', 'Note', 'new note', model.id)">
-                    <fa-icon icon="fa-solid fa-note-sticky"></fa-icon>
-                  </button>
-                  <button class="icon-button" type="button"
-                    @click="$emit('add-element', 'Project', 'new project', model.id)">
-                    <fa-icon icon="fa-solid fa-lightbulb"></fa-icon>
-                  </button>
+                  <div class="icon-container">
+                    <button class="icon-button" type="button"
+                      @click="$emit('add-element', 'Directory', 'new directory', model.id)">
+                      <fa-icon icon="fa-solid fa-folder"></fa-icon>
+                    </button>
+                  </div>
+                  <div class="icon-container">
+                    <button class="icon-button" type="button" @click="$emit('add-element', 'Note', 'new note', model.id)">
+                      <fa-icon icon="fa-solid fa-note-sticky"></fa-icon>
+                    </button>
+                  </div>
+                  <div class="icon-container">
+                    <button class="icon-button" type="button"
+                      @click="$emit('add-element', 'Project', 'new project', model.id)">
+                      <fa-icon icon="fa-solid fa-lightbulb"></fa-icon>
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div class="context-menu-reference">
+              <div class="context-menu-reference icon-container">
                 <button class="icon-button" :class="'other-include-' + model.id" type="button"
                   @click="toggleOtherContextMenu">
                   <fa-icon icon="fa-solid fa-ellipsis"></fa-icon>
                 </button>
                 <div v-if="showOtherContextMenu" class="context-menu"
                   v-click-outside="{ handler: toggleOtherContextMenu, include: otherIncluded }">
-                  <button class="icon-button" type="button" @click="$emit('delete-element', model.id, null)">
-                    <fa-icon icon="fa-solid fa-trash"></fa-icon>
-                  </button>
+                  <div class="icon-container">
+                    <button class="icon-button" type="button" @click="$emit('delete-element', model.id, null)">
+                      <fa-icon icon="fa-solid fa-trash"></fa-icon>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

@@ -32,16 +32,20 @@ watch(() => props.id, async (id) => {
     <div class="top-bar">
       <div v-if="!!content">
         <h1>{{ content.name }}</h1>
-        <button class="icon-button" v-if="edit" v-on:click="edit = false">
-          <fa-icon icon="fa-solid fa-floppy-disk"></fa-icon>
-        </button>
-        <button class="icon-button" v-else v-on:click="edit = true">
-          <fa-icon icon="fa-solid fa-pen"></fa-icon>
-        </button>
+        <div class="icon-container" v-if="edit">
+          <button class="icon-button" v-on:click="edit = false">
+            <fa-icon icon="fa-solid fa-floppy-disk"></fa-icon>
+          </button>
+        </div>
+        <div class="icon-container" v-else>
+          <button class="icon-button" v-on:click="edit = true">
+            <fa-icon icon="fa-solid fa-pen"></fa-icon>
+          </button>
+        </div>
       </div>
       <h1 v-else>~ Welcome to your flowboard ~</h1>
     </div>
-    <div v-if="!!content">
+    <div class="content" v-if="!!content">
       <NoteView v-if="node_type === 'Note'" :model="content" :edit="edit" @save-board="() => $emit('save-board')" />
     </div>
   </div>
@@ -65,10 +69,11 @@ watch(() => props.id, async (id) => {
 
   h1 {
     padding: 20px;
+    flex: 1;
   }
 
-  div {
-    flex: 1;
+  .content {
+    height: 100%;
   }
 }
 </style>

@@ -61,15 +61,21 @@ onMounted(async () => {
       <div class="title">
         <h1>Flowboard</h1>
         <div>
-          <button class="icon-button" type="button" @click="addElement('Directory', 'new directory', 0)">
-            <fa-icon icon="fa-solid fa-folder-plus"></fa-icon>
-          </button>
-          <button class="icon-button" type="button" @click="addElement('Note', 'new note', 0)">
-            <fa-icon icon="fa-solid fa-note-sticky"></fa-icon>
-          </button>
-          <button class="icon-button" type="button" @click="addElement('Project', 'new project', 0)">
-            <fa-icon icon="fa-solid fa-lightbulb"></fa-icon>
-          </button>
+          <div class="icon-container">
+            <button class="icon-button" type="button" @click="addElement('Directory', 'new directory', 0)">
+              <fa-icon icon="fa-solid fa-folder"></fa-icon>
+            </button>
+          </div>
+          <div class="icon-container">
+            <button class="icon-button" type="button" @click="addElement('Note', 'new note', 0)">
+              <fa-icon icon="fa-solid fa-note-sticky"></fa-icon>
+            </button>
+          </div>
+          <div class="icon-container">
+            <button class="icon-button" type="button" @click="addElement('Project', 'new project', 0)">
+              <fa-icon icon="fa-solid fa-lightbulb"></fa-icon>
+            </button>
+          </div>
         </div>
       </div>
       <div class="tree">
@@ -107,8 +113,9 @@ onMounted(async () => {
     justify-content: space-between;
     margin-bottom: 20px;
 
-    div button {
-      padding: 0px;
+    div {
+      display: flex;
+      flex-direction: row;
     }
   }
 }

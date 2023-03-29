@@ -6,10 +6,10 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-import { faFolderPlus, faNoteSticky, faLightbulb, faTrash, faPen, faFloppyDisk, faPlus, faEllipsis } from '@fortawesome/free-solid-svg-icons'
+import { faFolder, faNoteSticky, faLightbulb, faTrash, faPen, faFloppyDisk, faPlus, faEllipsis } from '@fortawesome/free-solid-svg-icons'
 import { ClickOutside } from "./directives";
 
-library.add(faFolderPlus);
+library.add(faFolder);
 library.add(faNoteSticky);
 library.add(faLightbulb);
 library.add(faTrash);
