@@ -196,6 +196,20 @@ mod test {
     }
 
     #[test]
+    fn test_set_node_name_valid() {
+        let mut board = get_board();
+        board.add_new_project("project", 0).unwrap();
+        board.set_node_name(1, "new_project_name").unwrap();
+        assert!(board.get_node(1).unwrap().get_name() == "new_project_name");
+        board.add_new_directory("directory", 0).unwrap();
+        board.set_node_name(2, "new_directory_name").unwrap();
+        assert!(board.get_node(2).unwrap().get_name() == "new_directory_name");
+        board.add_new_note("note", 0).unwrap();
+        board.set_node_name(3, "new_note_name").unwrap();
+        assert!(board.get_node(3).unwrap().get_name() == "new_note_name");
+    }
+
+    #[test]
     fn test_set_note_content_valid() {
         let mut board = get_board();
         board.add_new_note("note", 0).unwrap();
