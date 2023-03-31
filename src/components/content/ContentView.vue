@@ -32,15 +32,17 @@ watch(() => props.id, async (id) => {
     <div class="top-bar">
       <div v-if="!!content">
         <h1>{{ content.name }}</h1>
-        <div class="icon-container" v-if="edit">
-          <button class="icon-button" v-on:click="edit = false">
-            <fa-icon icon="fa-solid fa-floppy-disk"></fa-icon>
-          </button>
-        </div>
-        <div class="icon-container" v-else>
-          <button class="icon-button" v-on:click="edit = true">
-            <fa-icon icon="fa-solid fa-pen"></fa-icon>
-          </button>
+        <div class="icons">
+          <div class="icon-container" v-if="edit">
+            <button class="icon-button" v-on:click="edit = false">
+              <fa-icon icon="fa-solid fa-floppy-disk"></fa-icon>
+            </button>
+          </div>
+          <div class="icon-container" v-else>
+            <button class="icon-button" v-on:click="edit = true">
+              <fa-icon icon="fa-solid fa-pen"></fa-icon>
+            </button>
+          </div>
         </div>
       </div>
       <h1 v-else>~ Welcome to your flowboard ~</h1>
@@ -74,6 +76,12 @@ watch(() => props.id, async (id) => {
 
   .content {
     height: 100%;
+  }
+
+  .icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>
