@@ -41,6 +41,12 @@ function changeContentId(id: number) {
   contentId.value = id;
 }
 
+async function setContentName(name: string) {
+  await invoke("set_node_name", { id: contentId.value, name });
+  updateTree();
+  saveBoard();
+}
+
 function updateTree() {
   invoke("get_board_tree").then((data) => {
     treeData.value = data;
@@ -84,7 +90,7 @@ onMounted(async () => {
       </div>
     </div>
     <div class="main">
-      <ContentView :id="contentId" @save-board="saveBoard" />
+      <ContentView :id="contentId" @save-board="saveBoard" @set-content-name="setContentName" />
     </div>
   </div>
 </template>

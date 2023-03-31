@@ -88,6 +88,11 @@ impl Board {
         get_node(id, &self.nodes)
     }
 
+    pub fn set_node_name(&mut self, id: u64, name: &str) -> Result<()> {
+        get_mut_node(id, &mut self.nodes)?.set_name(name);
+        Ok(())
+    }
+
     pub fn set_note_content(&mut self, id: u64, content: &str) -> Result<()> {
         get_mut_node(id, &mut self.nodes)?
             .as_any_mut()

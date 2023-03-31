@@ -53,6 +53,17 @@ pub fn add_project(state: State<'_, BoardState>, name: &str, parent_id: u64) -> 
 }
 
 #[tauri::command]
+pub fn set_node_name(state: State<'_, BoardState>, id: u64, name: &str) -> Result<(), String> {
+    state
+        .inner()
+        .0
+        .write()
+        .unwrap()
+        .set_node_name(id, name)
+        .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
 pub fn set_note_content(
     state: State<'_, BoardState>,
     id: u64,

@@ -15,7 +15,7 @@ use board::Board;
 
 use crate::api::{
     add_directory, add_note, delete_node, get_board_tree, get_node_type, get_note, get_project,
-    save_board, set_note_content,
+    save_board, set_node_name, set_note_content,
 };
 
 pub struct BoardState(RwLock<Board>);
@@ -34,6 +34,7 @@ fn main() {
             add_note,
             add_project,
             delete_node,
+            set_node_name,
             set_note_content,
             get_node_type,
             get_note,

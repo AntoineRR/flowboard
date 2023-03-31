@@ -32,6 +32,10 @@ impl Node for Directory {
         self.name.clone()
     }
 
+    fn set_name(&mut self, name: &str) {
+        self.name = name.to_string();
+    }
+
     fn get_type(&self) -> NodeType {
         NodeType::Directory
     }

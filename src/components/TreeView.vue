@@ -19,8 +19,6 @@ function getOffset(el: HTMLElement) {
 
 function setMouseListener() {
   const elements = document.querySelectorAll('.tree-item-content') as NodeListOf<HTMLElement>;
-  console.log(elements);
-  console.log(props.treeData);
   let lastUpdate = new Date().getTime();
   const updatePeriod = 30; // ms
   function updateXY(e: MouseEvent) {

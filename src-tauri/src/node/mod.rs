@@ -20,6 +20,7 @@ pub enum NodeType {
 pub trait Node: Send + Sync {
     fn get_id(&self) -> u64;
     fn get_name(&self) -> String;
+    fn set_name(&mut self, name: &str);
     fn get_type(&self) -> NodeType;
     fn get_children(&self) -> Option<Vec<u64>>;
     fn add_child(&mut self, child_id: u64) -> Result<()>;
