@@ -79,8 +79,10 @@ textarea {
 .invisible-button {
   background-color: transparent;
   border: none;
+  border-radius: 0px;
   cursor: pointer;
   padding: 0;
+  margin: 0;
   box-shadow: none;
 }
 

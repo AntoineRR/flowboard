@@ -144,6 +144,11 @@ function toggleFold() {
     padding-bottom: 5px;
     border-radius: 8px;
     background-color: var(--surface-color-one);
+
+    button {
+      width: 100%;
+      text-align: left;
+    }
   }
 }
 
