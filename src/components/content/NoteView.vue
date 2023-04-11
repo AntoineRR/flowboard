@@ -23,17 +23,16 @@ watch(() => props.model, async (model) => {
 </script>
 
 <template>
-  <div class="content" v-if="edit">
+  <div class="edit-area" v-if="edit">
     <textarea v-model="content" v-on:focusout="_ => saveNote()" />
   </div>
-  <div class="content" v-else>
+  <div v-else>
     <vue-markdown :source="content" />
   </div>
 </template>
 
 <style scoped lang="scss">
-.content {
-  width: 100%;
+.edit-area {
   height: 100%;
 }
 

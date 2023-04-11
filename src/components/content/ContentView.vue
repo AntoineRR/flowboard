@@ -68,6 +68,7 @@ watch(() => props.id, async (id) => {
 
   .top-bar {
     flex: 0;
+    padding: 20px;
 
     div {
       display: flex;
@@ -77,7 +78,6 @@ watch(() => props.id, async (id) => {
   }
 
   .title {
-    padding: 20px;
     flex: 1;
 
     h1 {
@@ -99,6 +99,8 @@ watch(() => props.id, async (id) => {
 
   .content {
     height: 100%;
+    padding: 20px;
+    overflow: auto;
   }
 
   .icons {
