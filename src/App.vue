@@ -41,8 +41,8 @@ function changeContentId(id: number) {
   contentId.value = id;
 }
 
-async function setContentName(name: string) {
-  await invoke("set_node_name", { id: contentId.value, name });
+async function setContentName(id: number, name: string) {
+  await invoke("set_node_name", { id, name });
   updateTree();
   saveBoard();
 }
@@ -86,7 +86,7 @@ onMounted(async () => {
       </div>
       <div class="tree">
         <TreeView :tree-data="treeData" @add-element="addElement" @delete-element="deleteElement"
-          @load-content="changeContentId" />
+          @load-content="changeContentId" @set-content-name="setContentName" />
       </div>
     </div>
     <div class="main">

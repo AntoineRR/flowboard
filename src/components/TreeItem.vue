@@ -6,10 +6,12 @@ defineEmits<{
   (e: 'add-element', type: string, name: string, parent_id: number): void
   (e: 'delete-element', id: number, parent_id: number | null): void
   (e: 'load-content', id: number): void
+  (e: 'set-content-name', id: number, name: string): void
 }>()
 
 let showAddContextMenu = ref(false);
 let showOtherContextMenu = ref(false);
+let editTitle = ref(false);
 
 function toggleAddContextMenu() {
   showAddContextMenu.value = !showAddContextMenu.value;
@@ -50,9 +52,12 @@ function toggleFold() {
               @click="$emit('load-content', model.id)">
               {{ model.name }}
             </button>
-            <p v-else>
-              {{ model.name }}
-            </p>
+            <div v-else>
+              <p v-if="!editTitle" v-on:click="_ => editTitle = true">{{ model.name }}</p>
+              <input v-else v-model="model.name" v-focus v-on:focusout="_ => {
+                editTitle = false; $emit('set-content-name', model.id, model.name);
+              }" />
+            </div>
             <div class="button-container">
               <div class="context-menu-reference icon-container" v-if="model.node_type === 'Directory'">
                 <button class="icon-button" :class="'add-include-' + model.id" type="button"
@@ -103,7 +108,8 @@ function toggleFold() {
               <TreeItem :model="child"
                 @add-element="(type: string, name: string, id: number) => $emit('add-element', type, name, id)"
                 @delete-element="(id: number, parentId: number | null) => !!parentId ? $emit('delete-element', id, parentId) : $emit('delete-element', id, model.id)"
-                @load-content="(id: number) => $emit('load-content', id)" />
+                @load-content="(id: number) => $emit('load-content', id)"
+                @set-content-name="(id: number, name: string) => $emit('set-content-name', id, name)" />
             </ul>
           </div>
         </div>
@@ -195,5 +201,13 @@ ul {
 .folded {
   height: 0px;
   overflow: hidden;
+}
+
+input {
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  border: none;
+  background-color: transparent;
 }
 </style>

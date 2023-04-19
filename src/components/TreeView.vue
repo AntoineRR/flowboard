@@ -7,6 +7,7 @@ defineEmits<{
   (e: 'add-element', type: string, name: string, parent_id: number): void,
   (e: 'delete-element', id: number, parent_id: number | null): void,
   (e: 'load-content', id: number): void
+  (e: 'set-content-name', id: number, name: string): void
 }>()
 
 function getOffset(el: HTMLElement) {
@@ -47,7 +48,8 @@ onUpdated(() => {
     <ul>
       <TreeItem :model="item" @add-element="(type, name, id) => $emit('add-element', type, name, id)"
         @delete-element="(id, parentId) => !!parentId ? $emit('delete-element', id, parentId) : $emit('delete-element', id, 0)"
-        @load-content="(id: number) => $emit('load-content', id)">
+        @load-content="(id: number) => $emit('load-content', id)"
+        @set-content-name="(id: number, name: string) => $emit('set-content-name', id, name)">
       </TreeItem>
     </ul>
   </div>

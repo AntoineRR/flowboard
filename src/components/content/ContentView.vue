@@ -6,7 +6,7 @@ import NoteView from './NoteView.vue';
 const props = defineProps({ id: Number });
 defineEmits<{
   (e: 'save-board'): void
-  (e: 'set-content-name', name: string): void
+  (e: 'set-content-name', id: number, name: string): void
 }>();
 
 let nodeType: string;
@@ -36,7 +36,7 @@ watch(() => props.id, async (id) => {
         <div class="title">
           <h1 v-if="!editTitle" v-on:click="_ => editTitle = true">{{ content.name }}</h1>
           <input v-else v-model="content.name" v-focus v-on:focusout="_ => {
-            editTitle = false; $emit('set-content-name', content.name);
+            editTitle = false; $emit('set-content-name', content.id, content.name);
           }" />
         </div>
         <div class="icons">
