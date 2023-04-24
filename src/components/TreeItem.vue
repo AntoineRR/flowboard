@@ -177,6 +177,7 @@ function toggleFold() {
       width: 4px;
       border-radius: 2px;
       background-color: var(--surface-color-one);
+      animation: fold-hover-out 0.3s;
     }
   }
 
@@ -184,7 +185,36 @@ function toggleFold() {
     width: 8px;
     border-radius: 4px;
     background-color: var(--surface-color-two);
+    animation: fold-hover 0.3s;
     cursor: pointer;
+  }
+}
+
+@keyframes fold-hover {
+  0% {
+    width: 4px;
+    border-radius: 2px;
+    background-color: var(--surface-color-one);
+  }
+
+  100% {
+    width: 8px;
+    border-radius: 4px;
+    background-color: var(--surface-color-two);
+  }
+}
+
+@keyframes fold-hover-out {
+  0% {
+    width: 8px;
+    border-radius: 4px;
+    background-color: var(--surface-color-two);
+  }
+
+  100% {
+    width: 4px;
+    border-radius: 2px;
+    background-color: var(--surface-color-one);
   }
 }
 
@@ -199,8 +229,19 @@ ul {
 }
 
 .folded {
-  height: 0px;
+  max-height: 0px;
   overflow: hidden;
+  animation: fold 0.8s;
+}
+
+@keyframes fold {
+  0% {
+    max-height: 500px;
+  }
+
+  100% {
+    max-height: 0px;
+  }
 }
 
 input {
